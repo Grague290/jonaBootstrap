@@ -26,26 +26,27 @@
             <div class="col-12 col-md-6 mb-4">
                 <img src="login-back.avif" alt="Imagen de fondo">
             </div>
-            <!-- Columna del formulario -->
             <div class="col-12 col-md-6">
                 <img src="logo.png" alt="Logo" class="mb-3">
                 <h3>Accede al panel de administrador</h3>
-                <form>
+                <form method="POST" action="app/Authcontroller.php">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Correo</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
                         <div id="emailHelp" class="form-text">Tu correo está seguro</div>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1">
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="password">
                     </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">Chequeame</label>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Acceder</button>
-                </form>
+                
+                    <input type="hidden" name="action" value="access"> 
+                </form>                
             </div>
         </div>
     </div>
