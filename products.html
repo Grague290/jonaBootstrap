@@ -151,7 +151,7 @@
         spinner.style.display = 'flex';
         container.innerHTML = '';
 
-        const response = await fetch('products.php');
+        const response = await fetch('app/products.php');
         if (!response.ok) {
           throw new Error('Error al cargar los productos');
         }
