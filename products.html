@@ -110,32 +110,32 @@
     <div class="modal-dialog">
       <div class="modal-content bg-dark">
         <div class="modal-header">
-          <h5 class="modal-title" id="editModalLabel">Añadir/Editar Producto</h5>
+          <h5 class="modal-title" id="editModalLabel">Añadir Producto</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form id="productForm">
             <div class="mb-3">
-              <label for="productName" class="form-label">Nombre del Producto</label>
-              <input type="text" class="form-control bg-dark text-light" id="productName" required>
+              <label for="productName" class="form-label">Nombre</label>
+              <input type="text" class="form-control bg-dark text-light" id="productName" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="productSlug" class="form-label">Slug</label>
+              <input type="text" class="form-control bg-dark text-light" id="productSlug" name="slug" required>
             </div>
             <div class="mb-3">
               <label for="productDescription" class="form-label">Descripción</label>
-              <textarea class="form-control bg-dark text-light" id="productDescription" rows="3" required></textarea>
+              <textarea class="form-control bg-dark text-light" id="productDescription" name="description" rows="3" required></textarea>
             </div>
             <div class="mb-3">
-              <label for="productPrice" class="form-label">Precio</label>
-              <input type="number" class="form-control bg-dark text-light" id="productPrice" required>
-            </div>
-            <div class="mb-3">
-              <label for="productImage" class="form-label">Imagen</label>
-              <input type="file" class="form-control bg-dark text-light" id="productImage">
+              <label for="productFeatures" class="form-label">Características</label>
+              <textarea class="form-control bg-dark text-light" id="productFeatures" name="features" rows="3" required></textarea>
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary">Guardar</button>
+          <button type="button" class="btn btn-primary" id="saveProductBtn">Guardar</button>
         </div>
       </div>
     </div>
@@ -169,7 +169,7 @@
                   <p class="card-text">${product.description}</p>
                   <p class="card-text"><strong>$${product.price} MXN</strong></p>
                   <div class="mt-auto">
-                    <button class="btn btn-primary" disabled>Ver más</button>
+                    <a href="product.html?slug=${product.slug}" class="btn btn-primary">Ver más</a>
                     <button class="btn btn-danger" disabled>Eliminar</button>
                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal">
                       Editar
@@ -190,6 +190,35 @@
       }
     }
 
-    document.addEventListener('DOMContentLoaded', loadProducts);
+    document.addEventListener('DOMContentLoaded', function() {
+      loadProducts();
+  
+      const form = document.getElementById('productForm');
+      const saveProductBtn = document.getElementById('saveProductBtn');
+  
+      saveProductBtn.addEventListener('click', function() {
+        const formData = new FormData(form);
+  
+        fetch('app/create_product.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.code === "OK") {
+            alert('Producto agregado exitosamente');
+            document.getElementById('editModal').querySelector('.btn-close').click(); 
+            form.reset(); 
+            loadProducts(); 
+            console.log("1");
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error al agregar el producto');
+          console.log("3");
+        });
+      });
+    });
   </script>
 </body>
