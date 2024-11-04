@@ -14,7 +14,7 @@
         }
 
         img {
-            max-width: 100%; /* Asegura que las imágenes no se desborden */
+            max-width: 100%; 
             height: auto;
         }
     </style>
@@ -22,7 +22,6 @@
 <body>
     <div class="container">
         <div class="row d-flex justify-content-center align-items-center">
-            <!-- Columna de la imagen de fondo -->
             <div class="col-12 col-md-6 mb-4">
                 <img src="login-back.avif" alt="Imagen de fondo">
             </div>
@@ -44,7 +43,7 @@
                         <label class="form-check-label" for="exampleCheck1">Chequeame</label>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Acceder</button>
-                
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <input type="hidden" name="action" value="access"> 
                 </form>                
             </div>

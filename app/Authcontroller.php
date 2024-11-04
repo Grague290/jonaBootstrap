@@ -1,5 +1,16 @@
 <?php
-// Verificar si se ha enviado la acción de acceso
+
+session_start();
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+function verify_csrf_token() {
+    if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token'])) {
+        return false;
+    }
+    return hash_equals($_SESSION['csrf_token'], $_POST['csrf_token']);
+}
+
 if (isset($_POST['action']) && $_POST['action'] === 'access') {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -10,6 +21,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'access') {
 
 class AuthController {
     public function access($email, $password) {
+        
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -30,10 +42,14 @@ class AuthController {
 
         $response = json_decode($response);
 
+        
+
         if (isset($response->message) && $response->message === "Registro obtenido correctamente" && is_object($response->data)) {
             header('Location: ../products.html');
         } else {
             header('Location: ../index.html');
         }
+
+        
     }
 }
