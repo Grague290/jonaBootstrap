@@ -1,0 +1,17 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+RewriteRule ^products$ products.php [L]
+
+RewriteRule ^details/([^/]+)/?$ details_slug.php?slug=$1 [L,QSA]
+
+RewriteRule ^auth$ app/AuthController.php [L]
+
+RewriteRule ^resources$ app/ProductController.php [L]
+
+RewriteRule ^app/ - [F,L]
+
+ServerSignature Off
